@@ -6,7 +6,6 @@ class Squareo extends React.Component {
         super(props);
 
         this.state = {
-            ...props,
             status: 'hello yo soy squareo'
         };
     }
@@ -14,7 +13,7 @@ class Squareo extends React.Component {
     render() {
         return (
         <div className="squareo">
-            {this.state.hungerLevel}
+            {this.props.hungerLevel}
         </div>
         )
     }
