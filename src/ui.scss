@@ -1,0 +1,28 @@
+.App {
+  display: grid;
+  grid-template-columns: auto 20vw;
+  grid-template-rows: 5rem auto;
+  height: 100vh;
+  width: 100vw;
+}
+
+.status {
+  background-color: white;
+  padding: 2rem;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-end: 3;
+}
+
+.main {
+  background: linear-gradient(#54ffff, #58f058);
+  grid-row-start: 2;
+  position: relative;
+  overflow: hidden;
+}
+
+.interactions {
+  background-color: #dedede;
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
