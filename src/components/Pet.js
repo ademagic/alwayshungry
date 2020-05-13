@@ -24,14 +24,13 @@ function Pet(props) {
     let statusMessage = 'Yo Soy Squareo';
 
     for (let i = 0; i < STATUS_MESSAGES.length; i++) {
+        if (!props.isAlive) {
+            statusMessage = STATUS_MESSAGES.find(msg => msg.valueFrom === -100);
+            statusMessage = statusMessage.message;
+        }
+
         if (props.hungerLevel <= STATUS_MESSAGES[i].valueFrom) {
             statusMessage = STATUS_MESSAGES[i].message;
-
-            // Assuming the last message is death.
-            if(i === STATUS_MESSAGES.length - 1)
-            {
-                props.onDead();
-            }
         }
     }
 
