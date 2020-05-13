@@ -4,15 +4,15 @@ import './pet.scss';
 const STATUS_MESSAGES = [
     {
         valueFrom: 75,
-        message: 'I\'m peckish'
+        message: 'u . u'
     },
     {
         valueFrom: 50,
-        message: 'I\'m getting pretty hungry'
+        message: 'o . o'
     },
     {
         valueFrom: 25,
-        message: 'I\'m starving, feed me'
+        message: '* . *'
     },
     {
         valueFrom: 0,
@@ -21,7 +21,7 @@ const STATUS_MESSAGES = [
 ];
 
 function Pet(props) {
-    let statusMessage = 'Woof.';
+    let statusMessage = '^ . ^';
 
     for (let i = 0; i < STATUS_MESSAGES.length; i++) {
         if (!props.isAlive) {
