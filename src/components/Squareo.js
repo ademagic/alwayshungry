@@ -13,6 +13,10 @@ const STATUS_MESSAGES = [
     {
         valueFrom: 25,
         message: 'I\'m starving, feed me'
+    },
+    {
+        valueFrom: -100,
+        message: 'x . x'
     }
 ];
 
@@ -20,8 +24,14 @@ function Squareo(props) {
     let statusMessage = 'Yo Soy Squareo';
 
     for (let i = 0; i < STATUS_MESSAGES.length; i++) {
-        if (props.hungerLevel < STATUS_MESSAGES[i].valueFrom) {
+        if (props.hungerLevel <= STATUS_MESSAGES[i].valueFrom) {
             statusMessage = STATUS_MESSAGES[i].message;
+
+            // Assuming the last message is death.
+            if(i === STATUS_MESSAGES.length - 1)
+            {
+                props.onDead();
+            }
         }
     }
 
