@@ -9,7 +9,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = {}
+  }
+
+  onReset = () => {
+    this.setAlive(true);
+    this.setState({
       hungerLevel: 100,
       hungerDepletion: 10,
       energyLevel: 100,
@@ -17,11 +22,11 @@ class App extends React.Component {
       healthLevel: 100,
       healthDepletion: 10,
       time: 0
-    }
+    })
   }
 
   deplete(attr, val) {
-    return Math.max(0, (attr - val));
+    return Math.max(-100, (attr - val));
   }
 
   depleteHunger () {
@@ -34,6 +39,8 @@ class App extends React.Component {
         hungerLevel: this.depleteHunger()
       })
     }, HEARTBEAT);
+
+    this.onReset();
   }
 
   componentWillUnmount() {
@@ -42,6 +49,15 @@ class App extends React.Component {
 
   feed = () => {
     this.setState({hungerLevel: 100});
+  }
+
+  onDead = () => {
+    this.setAlive(false);
+  }
+
+  setAlive(alive){
+    document.getElementById('feed').disabled = !alive;
+    document.getElementById('reset').disabled = alive;
   }
 
   render() {
@@ -56,10 +72,12 @@ class App extends React.Component {
           hungerLevel={hungerLevel}
           energyLevel={energyLevel}
           healthLevel={healthLevel}
+          onDead={this.onDead}
           />
         </div>
         <div className="interactions">
-          <button onClick={this.feed}>Feed</button>
+          <button id='feed' onClick={this.feed}>Feed</button>
+          <button id='reset' onClick={this.onReset}>Reset</button>
         </div>
       </div>
     )
