@@ -40,6 +40,10 @@ class App extends React.Component {
     clearInterval(this.ticker)
   }
 
+  feed = () => {
+    this.setState({hungerLevel: 100});
+  }
+
   render() {
     const { hungerLevel, energyLevel, healthLevel } = this.state;
     return (
@@ -55,7 +59,7 @@ class App extends React.Component {
           />
         </div>
         <div className="interactions">
-          <button>Feed</button>
+          <button onClick={this.feed}>Feed</button>
         </div>
       </div>
     )
