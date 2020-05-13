@@ -1,5 +1,5 @@
 import React from 'react';
-import Squareo from './components/Squareo';
+import Pet from './components/Pet';
 import './ui.scss';
 
 const HEARTBEAT = 1000;
@@ -29,8 +29,12 @@ class App extends React.Component {
     return Math.max(-100, (attr - val));
   }
 
-  depleteHunger () {
+  depleteHunger() {
     return this.deplete(this.state.hungerLevel, this.state.hungerDepletion);
+  }
+
+  increase(attr, val) {
+    return Math.min(100, (attr + val));
   }
 
   componentDidMount() {
@@ -68,7 +72,7 @@ class App extends React.Component {
           hunger: {hungerLevel}<br/>
         </div>
         <div className="main">
-          <Squareo
+          <Pet
           hungerLevel={hungerLevel}
           energyLevel={energyLevel}
           healthLevel={healthLevel}

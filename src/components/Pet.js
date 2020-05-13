@@ -1,5 +1,5 @@
 import React from 'react';
-import './squareo.scss';
+import './pet.scss';
 
 const STATUS_MESSAGES = [
     {
@@ -20,7 +20,7 @@ const STATUS_MESSAGES = [
     }
 ];
 
-function Squareo(props) {
+function Pet(props) {
     let statusMessage = 'Yo Soy Squareo';
 
     for (let i = 0; i < STATUS_MESSAGES.length; i++) {
@@ -42,4 +42,4 @@ function Squareo(props) {
     )
 }
 
-export default Squareo;
+export default Pet;
