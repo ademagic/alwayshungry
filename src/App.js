@@ -1,5 +1,8 @@
 import React from 'react';
-import Pet from './components/Pet';
+
+import Pet from './components/Pet/Pet';
+import StatusBar from './components/StatusBar/StatusBar';
+
 import './ui.scss';
 
 const HEARTBEAT = 1000;
@@ -26,7 +29,7 @@ class App extends React.Component {
   }
 
   deplete(attr, val) {
-    return Math.max(-100, (attr - val));
+    return Math.max(0, (attr - val));
   }
 
   depleteHunger() {
@@ -67,11 +70,13 @@ class App extends React.Component {
   render() {
     const { hungerLevel, energyLevel, healthLevel, alive } = this.state;
     return (
-      <div className="App">
-        <div className="status">
-          hunger: {hungerLevel}<br/>
+      <div className='App'>
+        <div className='status'>
+          <StatusBar label='hunger' value={hungerLevel}/>
+          <StatusBar label='energy' value={energyLevel}/>
+          <StatusBar label='health' value={healthLevel}/>
         </div>
-        <div className="main">
+        <div className='main'>
           <Pet
           hungerLevel={hungerLevel}
           energyLevel={energyLevel}
@@ -79,7 +84,7 @@ class App extends React.Component {
           isAlive={alive}
           />
         </div>
-        <div className="interactions">
+        <div className='interactions'>
           <button id='feed' onClick={this.feed}>Feed</button>
           <button id='reset' onClick={this.reset}>Reset</button>
         </div>

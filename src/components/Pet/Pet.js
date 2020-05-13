@@ -15,17 +15,17 @@ const STATUS_MESSAGES = [
         message: 'I\'m starving, feed me'
     },
     {
-        valueFrom: -100,
+        valueFrom: 0,
         message: 'x . x'
     }
 ];
 
 function Pet(props) {
-    let statusMessage = 'Yo Soy Squareo';
+    let statusMessage = 'Woof.';
 
     for (let i = 0; i < STATUS_MESSAGES.length; i++) {
         if (!props.isAlive) {
-            statusMessage = STATUS_MESSAGES.find(msg => msg.valueFrom === -100);
+            statusMessage = STATUS_MESSAGES.find(msg => msg.valueFrom === 0);
             statusMessage = statusMessage.message;
         }
 
@@ -35,7 +35,7 @@ function Pet(props) {
     }
 
     return (
-        <div className="squareo">
+        <div className="pet">
             {statusMessage}
         </div>
     )
