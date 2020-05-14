@@ -58,10 +58,6 @@ class App extends React.Component {
     this.setState({hungerLevel: 100});
   }
 
-  onDead = () => {
-    this.setState({alive: false});
-  }
-
   setAlive(alive) {
     document.getElementById('feed').disabled = !alive;
     document.getElementById('reset').disabled = alive;
