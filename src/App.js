@@ -7,46 +7,64 @@ import './ui.scss';
 
 const HEARTBEAT = 1000;
 
+const BASE_STATS = {
+  depletion: {
+    energy: 10,
+    hunger: 10,
+    health: 10
+  },
+  levels: {
+    hunger: 100,
+    energy: 100,
+    health: 100,
+  }
+}
+
+const dirtyCloneObj = (obj) => {
+  // This feels dirty. Cloning the object by parsing it as json so we can make a copy.
+  return JSON.parse(JSON.stringify(obj))
+}
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {}
+    this.stats = dirtyCloneObj(BASE_STATS);
+
+    this.state = {
+      time: 0,
+      alive: true,
+      stats: dirtyCloneObj(this.stats)
+    }
   }
 
   reset = () => {
+    this.stats = dirtyCloneObj(BASE_STATS)
     this.setState({
-      hungerLevel: 100,
-      hungerDepletion: 10,
-      energyLevel: 100,
-      energyDepletion: 10,
-      healthLevel: 100,
-      healthDepletion: 10,
       time: 0,
-      alive: true
-    })
+      alive: true,
+      stats: dirtyCloneObj(this.stats)
+    });
   }
 
-  deplete(attr, val) {
-    return Math.max(0, (attr - val));
+  deplete(attr) {
+    return Math.max(0, (this.stats.levels[attr] - this.stats.depletion[attr]));
   }
 
   depleteHunger() {
-    return this.deplete(this.state.hungerLevel, this.state.hungerDepletion);
+    return this.deplete('hunger');
   }
 
   increase(attr, val) {
-    return Math.min(100, (attr + val));
+    return Math.min(100, (this.stats.levels[attr] + val));
   }
 
   componentDidMount() {
     this.reset();
-
     this.ticker = setInterval(() => {
-      this.setState({
-        hungerLevel: this.depleteHunger()
-      })
+      this.stats.levels.hunger = this.depleteHunger();
+      // We should only update state here if stats have changed
+      this.setState({ stats: dirtyCloneObj(this.stats) })
     }, HEARTBEAT);
   }
 
@@ -55,7 +73,7 @@ class App extends React.Component {
   }
 
   feed = () => {
-    this.setState({hungerLevel: 100});
+    this.stats.levels.hunger = this.increase('hunger', 17);
   }
 
   setAlive(alive) {
@@ -64,20 +82,19 @@ class App extends React.Component {
   }
 
   render() {
-    const { hungerLevel, energyLevel, healthLevel, alive } = this.state;
     return (
       <div className='App'>
         <div className='status'>
-          <StatusBar label='hunger' value={hungerLevel}/>
-          <StatusBar label='energy' value={energyLevel}/>
-          <StatusBar label='health' value={healthLevel}/>
+          <StatusBar label='hunger' value={this.stats.levels.hunger}/>
+          <StatusBar label='energy' value={this.stats.levels.energy}/>
+          <StatusBar label='health' value={this.stats.levels.health}/>
         </div>
         <div className='main'>
           <Pet
-          hungerLevel={hungerLevel}
-          energyLevel={energyLevel}
-          healthLevel={healthLevel}
-          isAlive={alive}
+          hungerLevel={this.stats.levels.hunger}
+          energyLevel={this.stats.levels.energy}
+          healthLevel={this.stats.levels.health}
+          isAlive={this.state.alive}
           />
         </div>
         <div className='interactions'>
