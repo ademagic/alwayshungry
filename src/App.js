@@ -17,7 +17,9 @@ const BASE_STATS = {
     hunger: 100,
     energy: 100,
     health: 100,
-  }
+  },
+  age:  0,
+  ageRate: 1
 }
 
 const dirtyCloneObj = (obj) => {
@@ -53,12 +55,19 @@ class App extends React.Component {
     return newValue;
   }
 
+  age() {
+    if(this.state.alive){
+      this.depleteHunger();
+      this.stats.age += this.stats.ageRate;
+    }
+  }
+
   depleteHunger() {
     const hungerLevel = this.deplete('hunger');
     if(hungerLevel === 0){
       this.depleteHealth();
     }else{
-      this.increase('health', this.stats.depletion['health']);
+     this.increase('health', this.stats.depletion['health']);
     }
     return hungerLevel;
   }
@@ -66,7 +75,10 @@ class App extends React.Component {
   depleteHealth() {
     const healthLevel = this.deplete('health');
     if(healthLevel === 0){
-      this.setState({alive: false});
+      this.setState({
+        alive: false,
+        time: this.stats.age
+      });
     }
     return healthLevel;
   }
@@ -77,7 +89,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.ticker = setInterval(() => {
-      this.stats.levels.hunger = this.depleteHunger();
+      this.age();
       // We should only update state here if stats have changed
       this.setState({ stats: dirtyCloneObj(this.stats) })
     }, HEARTBEAT);
@@ -105,6 +117,7 @@ class App extends React.Component {
           hungerLevel={this.stats.levels.hunger}
           energyLevel={this.stats.levels.energy}
           healthLevel={this.stats.levels.health}
+          age={this.stats.age}
           isAlive={this.state.alive}
           />
         </div>

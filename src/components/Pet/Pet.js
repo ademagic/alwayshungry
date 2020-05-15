@@ -40,10 +40,13 @@ function Pet(props) {
     }
 
     return (
-        <div className="pet">
-            {statusMessage}
+        <div>
+            Seconds old: {props.age}
+            <div className="pet">
+                {statusMessage}
+            </div>
         </div>
-    )
+    );
 }
 
 export default Pet;
