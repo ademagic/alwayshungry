@@ -22,7 +22,7 @@ const BASE_STATS = {
 
 const dirtyCloneObj = (obj) => {
   // This feels dirty. Cloning the object by parsing it as json so we can make a copy.
-  return JSON.parse(JSON.stringify(obj))
+  return JSON.parse(JSON.stringify(obj));
 }
 
 class App extends React.Component {
@@ -48,11 +48,25 @@ class App extends React.Component {
   }
 
   deplete(attr) {
-    return Math.max(0, (this.stats.levels[attr] - this.stats.depletion[attr]));
+    const newValue = Math.max(0, (this.stats.levels[attr] - this.stats.depletion[attr])); 
+    this.stats.levels[attr] = newValue;
+    return newValue;
   }
 
   depleteHunger() {
-    return this.deplete('hunger');
+    const hungerLevel = this.deplete('hunger');
+    if(hungerLevel === 0){
+      this.depleteHealth();
+    }
+    return hungerLevel;
+  }
+
+  depleteHealth() {
+    const healthLevel = this.deplete('health');
+    if(healthLevel === 0){
+      this.setState({alive: false});
+    }
+    return healthLevel;
   }
 
   increase(attr, val) {

@@ -16,7 +16,12 @@ const STATUS_MESSAGES = [
     },
     {
         valueFrom: 0,
-        message: 'x . x'
+        message: '- . x'
+    },
+    // DEATH
+    {
+        valueFrom: -100,
+        message: 'X . x'
     }
 ];
 
@@ -25,7 +30,7 @@ function Pet(props) {
 
     for (let i = 0; i < STATUS_MESSAGES.length; i++) {
         if (!props.isAlive) {
-            statusMessage = STATUS_MESSAGES.find(msg => msg.valueFrom === 0);
+            statusMessage = STATUS_MESSAGES.find(msg => msg.valueFrom === -100);
             statusMessage = statusMessage.message;
         }
 
