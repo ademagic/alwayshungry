@@ -57,6 +57,8 @@ class App extends React.Component {
     const hungerLevel = this.deplete('hunger');
     if(hungerLevel === 0){
       this.depleteHealth();
+    }else{
+      this.increase('health', this.stats.depletion['health']);
     }
     return hungerLevel;
   }
