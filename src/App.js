@@ -60,7 +60,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.reset();
     this.ticker = setInterval(() => {
       this.stats.levels.hunger = this.depleteHunger();
       // We should only update state here if stats have changed
@@ -75,11 +74,6 @@ class App extends React.Component {
   feed = (val) => {
     this.stats.levels.hunger = this.increase('hunger', val);
     this.setState({stats: dirtyCloneObj(this.stats)});
-  }
-
-  setAlive(alive) {
-    document.getElementById('feed').disabled = !alive;
-    document.getElementById('reset').disabled = alive;
   }
 
   render() {
@@ -99,10 +93,10 @@ class App extends React.Component {
           />
         </div>
         <div className='interactions'>
-          <button id='feed' onClick={() => this.feed(1)}>Feed 1</button>
-          <button id='feed' onClick={() => this.feed(7)}>Feed 7</button>
-          <button id='feed' onClick={() => this.feed(18)}>Feed 18</button>
-          <button id='reset' onClick={this.reset}>Reset</button>
+          <button onClick={() => this.feed(1)}>Feed 1</button>
+          <button onClick={() => this.feed(7)}>Feed 7</button>
+          <button onClick={() => this.feed(18)}>Feed 18</button>
+          <button onClick={this.reset}>Reset</button>
         </div>
       </div>
     )
